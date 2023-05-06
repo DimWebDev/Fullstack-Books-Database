@@ -6,12 +6,12 @@ const app = express();
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "newpassword",
+  password: "12345678",
   database: "test",
 });
 
 // ------------- Authentication Error Fix -----------------------------
-// ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'newpassword';
+// ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '12345678';
 // The ALTER USER statement changes the authentication method and password for
 // the MySQL user root when connecting  from localhost specifically for the
 // connection you create using mysql.createConnection() in your code.
