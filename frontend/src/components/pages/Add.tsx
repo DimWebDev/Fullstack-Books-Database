@@ -1,31 +1,33 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
-export const Update = () => {
-  const [book, setBook] = useState({
+interface IBook {
+  title: string;
+  description: string;
+  price: number | null;
+  cover: string;
+}
+
+export const Add = () => {
+  const [book, setBook] = useState<IBook>({
     title: "",
     description: "",
     price: null,
     cover: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBook((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     console.log(book);
   };
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const bookId = location.pathname.split("/")[2];
 
-  const handleClick = async (e) => {
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
-        `http://localhost:8800/books/${bookId}`,
-        book
-      );
+      const response = await axios.post("http://localhost:8800/books", book);
       console.log(response.data);
       navigate("/");
     } catch (error) {
@@ -35,7 +37,7 @@ export const Update = () => {
 
   return (
     <div className="formDiv">
-      <h1>Update the book</h1>
+      <h1>Add</h1>
       <input
         type="text"
         placeholder="Title"
@@ -61,7 +63,7 @@ export const Update = () => {
         onChange={handleChange}
       />
       <button className="formButton" onClick={handleClick}>
-        Update
+        Add
       </button>
     </div>
   );
