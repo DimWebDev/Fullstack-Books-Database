@@ -29,7 +29,7 @@ export const Add = () => {
   };
 
   return (
-    <div className="form">
+    <div className="formDiv">
       <h1>Add</h1>
       <input
         type="text"
@@ -55,7 +55,9 @@ export const Add = () => {
         name="cover"
         onChange={handleChange}
       />
-      <button onClick={handleClick}>Add</button>
+      <button className="formButton" onClick={handleClick}>
+        Add
+      </button>
     </div>
   );
 };
