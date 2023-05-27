@@ -1,15 +1,26 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, MouseEvent } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+interface IBook {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  cover: string;
+}
+
+interface IResponse {
+  data: IBook[];
+}
+
 export const Books = () => {
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState<IBook[]>([]);
 
   useEffect(() => {
     const fetchAllBooks = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/books");
+        const res: IResponse = await axios.get("http://localhost:8800/books");
         console.log(res.data);
         setBooks(res.data);
       } catch (err) {
@@ -19,7 +30,7 @@ export const Books = () => {
     fetchAllBooks();
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number) => {
     try {
       await axios.delete(`http://localhost:8800/books/${id}`);
       window.location.reload();
@@ -32,7 +43,7 @@ export const Books = () => {
     <div>
       <h1>Dimitrios' Book Shop</h1>
       <div className="books">
-        {books.map((book) => (
+        {books.map((book: IBook) => (
           <div className="book" key={book.id}>
             {book.cover && <img src={book.cover} alt="book cover" />}
             <h2>{book.title}</h2>
@@ -41,7 +52,9 @@ export const Books = () => {
             <button className="delete" onClick={() => handleDelete(book.id)}>
               Delete
             </button>
-            <button className="update"><Link to={`/update/${book.id}`}>Update</Link></button>
+            <button className="update">
+              <Link to={`/update/${book.id}`}>Update</Link>
+            </button>
           </div>
         ))}
       </div>
